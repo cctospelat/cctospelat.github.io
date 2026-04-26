@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const newsEntries = await getCollection('noticias', ({ id }) => id.split('/')[0] === lang);
+
+const sortedNews = newsEntries.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 6);
+
+const formatDate = (date: Date) => {
+  const locale = lang === 'ca' ? 'ca-ES' : lang === 'es' ? 'es-ES' : lang === 'en' ? 'en-GB' : 'fr-FR';
+  return new Intl.DateTimeFormat(locale, {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
+  }).format(date);
+};
+---
+
+<section id="noticias" class="py-24 bg-slate-50 relative">
+  <div class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
+
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-14">
+      <div>
+        <span class="text-red-500 font-display font-bold uppercase tracking-[0.3em] text-sm">Club</span>
+        <h2 class="font-display font-black uppercase tracking-wide text-4xl lg:text-5xl text-slate-800 mt-1 mb-3">{t('news.title')}</h2>
+        <div class="w-12 h-1 bg-red-500"></div>
+      </div>
+      <p class="text-slate-500 mt-4 md:mt-0 text-base max-w-xs text-right hidden md:block">{t('news.subtitle')}</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {sortedNews.map(post => (
+        <article class="bg-white rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-red-100 flex flex-col group hover:-translate-y-1">
+          <div class="aspect-video w-full bg-slate-200 relative overflow-hidden">
+            {post.data.image ? (
+              <img src={post.data.image} alt={post.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            ) : (
+              <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 group-hover:scale-105 transition-transform duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5L18.5 7H20z" />
+                </svg>
+              </div>
+            )}
+            {/* Date badge */}
+            <div class="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-md">
+              {formatDate(post.data.date)}
+            </div>
+          </div>
+          <div class="p-6 flex-grow flex flex-col">
+            <h3 class="font-display font-bold uppercase tracking-wide text-xl text-slate-800 mb-2 leading-tight group-hover:text-red-500 transition-colors">
+              <a href={`#noticias-${post.id}`} class="focus:outline-none">
+                <span class="absolute inset-0" aria-hidden="true"></span>
+                {post.data.title}
+              </a>
+            </h3>
+            <p class="text-slate-600 mb-4 line-clamp-3 text-sm flex-grow leading-relaxed">
+              {post.data.summary}
+            </p>
+            <div class="mt-auto flex items-center gap-1.5 text-red-500 font-bold text-sm uppercase tracking-wide">
+              {t('news.read_more')}
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          {/* Bottom red accent bar */}
+          <div class="h-1 bg-gradient-to-r from-red-500 to-rose-400 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>

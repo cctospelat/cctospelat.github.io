@@ -1,0 +1,348 @@
+---
+import { getCollection, render } from 'astro:content';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const entrenamientoEntries = await getCollection('entrenamiento', ({ id }) => id.split('/')[0] === lang);
+const entrenamiento = entrenamientoEntries[0];
+
+if (!entrenamiento) {
+  throw new Error(`No entrenamiento data found for language ${lang}.`);
+}
+
+const { Content } = await render(entrenamiento);
+
+const rutasEntries = await getCollection('rutas', ({ id }) => id.split('/')[0] === lang);
+const fichasEntries = await getCollection('fichas', ({ id }) => id.split('/')[0] === lang);
+
+const difficultyStyle = (dif: string) => {
+  const d = dif.toLowerCase();
+  if (d.includes('baj') || d.includes('fàcil') || d.includes('easy') || d.includes('facile')) return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30';
+  if (d.includes('med') || d.includes('mit') || d.includes('moy')) return 'text-amber-400 bg-amber-400/10 border-amber-400/30';
+  if (d.includes('alt') || d.includes('hig') || d.includes('hau')) return 'text-orange-400 bg-orange-400/10 border-orange-400/30';
+  return 'text-red-400 bg-red-400/10 border-red-400/30';
+};
+---
+
+<section id="entrenamiento" class="py-24 bg-slate-900 relative overflow-hidden">
+  {/* Decorative background */}
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-red-500/10 rounded-full -mr-24 -mt-24"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-red-500/5 rounded-full -ml-24 -mb-24"></div>
+    <div class="absolute right-8 top-1/2 -translate-y-1/2 font-display font-black text-[16rem] leading-none text-white/[0.03] select-none hidden xl:block">RUN</div>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 relative">
+    <div class="text-center mb-16">
+      <span class="text-red-400 font-display font-bold uppercase tracking-[0.3em] text-sm">{t('entrenamiento.label')}</span>
+      <h2 class="font-display font-black uppercase tracking-wide text-4xl lg:text-5xl text-white mt-1 mb-4">{t('nav.entrenamiento')}</h2>
+      <div class="w-12 h-1 bg-red-500 mx-auto"></div>
+    </div>
+
+  </div>
+
+  {fichasEntries.length > 0 && (
+    <div class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 relative mt-4">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-1 h-7 bg-emerald-500 rounded-full shrink-0"></div>
+        <span class="text-emerald-400 font-display font-bold uppercase tracking-[0.3em] text-sm">{t('entrenamiento.label')}</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {fichasEntries.map(ficha => (
+          <article class="bg-slate-800 border border-slate-700 border-t-2 border-t-emerald-500/60 rounded-2xl overflow-hidden flex flex-col hover:border-emerald-500/50 hover:border-t-emerald-500 transition-colors duration-300">
+
+            {/* Image */}
+            {ficha.data.imagen ? (
+              <button
+                class="aspect-video w-full overflow-hidden cursor-zoom-in group relative"
+                data-lightbox-src={ficha.data.imagen}
+                data-lightbox-alt={ficha.data.nombre}
+                aria-label={`Ampliar imagen de ${ficha.data.nombre}`}
+              >
+                <img
+                  src={ficha.data.imagen}
+                  alt={ficha.data.nombre}
+                  class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/30">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                </span>
+              </button>
+            ) : (
+              <div class="aspect-video w-full bg-slate-700/50 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+              </div>
+            )}
+
+            <div class="p-5 flex flex-col flex-grow gap-5">
+
+              {/* Title */}
+              <h4 class="font-display font-black uppercase tracking-wide text-xl text-white leading-tight border-b border-slate-700 pb-4">
+                {ficha.data.nombre}
+              </h4>
+
+              {/* Ejecución */}
+              <div>
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="w-5 h-5 rounded-full bg-emerald-400/20 flex items-center justify-center shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                  </span>
+                  <p class="text-emerald-400 text-xs font-bold uppercase tracking-widest">{t('fichas.ejecucion')}</p>
+                </div>
+                <ol class="space-y-2">
+                  {ficha.data.ejecucion.map((paso, i) => (
+                    <li class="flex items-start gap-3 text-slate-300 text-sm">
+                      <span class="shrink-0 w-5 h-5 rounded-full bg-emerald-400/10 border border-emerald-400/30 text-emerald-400 text-xs font-black flex items-center justify-center leading-none">{i + 1}</span>
+                      {paso}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              {/* Evitar */}
+              <div>
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="w-5 h-5 rounded-full bg-red-400/20 flex items-center justify-center shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </span>
+                  <p class="text-red-400 text-xs font-bold uppercase tracking-widest">{t('fichas.evitar')}</p>
+                </div>
+                <ul class="space-y-2">
+                  {ficha.data.evitar.map(item => (
+                    <li class="flex items-start gap-3 text-slate-300 text-sm">
+                      <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0 mt-1.5"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Consejos */}
+              <div class="mt-auto pt-4 border-t border-slate-700">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="w-5 h-5 rounded-full bg-amber-400/20 flex items-center justify-center shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  </span>
+                  <p class="text-amber-400 text-xs font-bold uppercase tracking-widest">{t('fichas.consejos')}</p>
+                </div>
+                <ul class="space-y-2">
+                  {ficha.data.consejos.map(consejo => (
+                    <li class="flex items-start gap-3 text-slate-300 text-sm">
+                      <span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 mt-1.5"></span>
+                      {consejo}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {rutasEntries.length > 0 && (
+    <div class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 relative mt-16">
+      <div class="border-t border-slate-700/50 mb-16"></div>
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-1 h-7 bg-red-500 rounded-full shrink-0"></div>
+        <span class="text-red-400 font-display font-bold uppercase tracking-[0.3em] text-sm">Trail</span>
+        <h3 class="font-display font-black uppercase tracking-wide text-2xl text-white">{t('rutas.title')}</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {rutasEntries.map(ruta => (
+          <article class="bg-slate-950 border border-slate-700/60 border-t-2 border-t-red-500/60 rounded-2xl overflow-hidden flex flex-col hover:border-red-500/50 hover:border-t-red-500 transition-colors duration-300">
+
+            {/* Image */}
+            {ruta.data.imagen ? (
+              <button
+                class="aspect-video w-full overflow-hidden cursor-zoom-in group relative"
+                data-lightbox-src={ruta.data.imagen}
+                data-lightbox-alt={ruta.data.nombre}
+                aria-label={`Ampliar imagen de ${ruta.data.nombre}`}
+              >
+                <img
+                  src={ruta.data.imagen}
+                  alt={ruta.data.nombre}
+                  class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/30">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                </span>
+              </button>
+            ) : (
+              <div class="aspect-video w-full bg-slate-700/50 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 17l4-8 4 4 3-6 4 10"/><circle cx="18" cy="5" r="2"/>
+                </svg>
+              </div>
+            )}
+
+            <div class="p-5 flex flex-col flex-grow">
+
+              {/* Header */}
+              <div class="flex items-start justify-between gap-3 mb-4">
+                <h4 class="font-display font-black uppercase tracking-wide text-lg text-white leading-tight">{ruta.data.nombre}</h4>
+                <span class={`shrink-0 text-xs font-bold uppercase tracking-wide px-2 py-1 rounded-lg border ${difficultyStyle(ruta.data.dificultad)}`}>
+                  {ruta.data.dificultad}
+                </span>
+              </div>
+
+              {/* Stats grid */}
+              <div class="grid grid-cols-2 gap-x-4 gap-y-3 mb-4">
+
+                <div>
+                  <p class="text-slate-500 text-xs uppercase tracking-wider mb-0.5">{t('rutas.distancia')}</p>
+                  <p class="text-white font-bold text-sm">{ruta.data.distancia}</p>
+                </div>
+
+                <div>
+                  <p class="text-slate-500 text-xs uppercase tracking-wider mb-0.5">{t('rutas.tipo')}</p>
+                  <p class="text-white font-bold text-sm">{ruta.data.tipo_ruta}</p>
+                </div>
+
+                <div>
+                  <p class="text-slate-500 text-xs uppercase tracking-wider mb-0.5">{t('rutas.desnivel_pos')}</p>
+                  <p class="text-emerald-400 font-bold text-sm">+{ruta.data.desnivel_positivo} m</p>
+                </div>
+
+                <div>
+                  <p class="text-slate-500 text-xs uppercase tracking-wider mb-0.5">{t('rutas.desnivel_neg')}</p>
+                  <p class="text-red-400 font-bold text-sm">-{ruta.data.desnivel_negativo} m</p>
+                </div>
+
+                <div>
+                  <p class="text-slate-500 text-xs uppercase tracking-wider mb-0.5">{t('rutas.altitud_max')}</p>
+                  <p class="text-white font-bold text-sm">{ruta.data.altitud_maxima} m</p>
+                </div>
+
+                <div>
+                  <p class="text-slate-500 text-xs uppercase tracking-wider mb-0.5">{t('rutas.altitud_min')}</p>
+                  <p class="text-white font-bold text-sm">{ruta.data.altitud_minima} m</p>
+                </div>
+
+              </div>
+
+              {/* TrailRank */}
+              {ruta.data.trailrank !== undefined && (
+                <div class="flex items-center gap-3 mb-4 p-3 bg-slate-800/80 rounded-xl">
+                  <div class="relative w-10 h-10 shrink-0">
+                    <svg viewBox="0 0 36 36" class="w-10 h-10 -rotate-90">
+                      <circle cx="18" cy="18" r="15.9" fill="none" stroke="#334155" stroke-width="3"/>
+                      <circle
+                        cx="18" cy="18" r="15.9" fill="none"
+                        stroke="#ef4444" stroke-width="3"
+                        stroke-dasharray={`${ruta.data.trailrank} ${100 - ruta.data.trailrank}`}
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                    <span class="absolute inset-0 flex items-center justify-center text-white text-xs font-black">{ruta.data.trailrank}</span>
+                  </div>
+                  <div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wider">{t('rutas.trailrank')}</p>
+                    <p class="text-white text-xs font-medium">wikiloc.com</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Points of interest */}
+              {ruta.data.puntos_interes && ruta.data.puntos_interes.length > 0 && (
+                <div class="mt-auto pt-4 border-t border-slate-700">
+                  <p class="text-slate-500 text-xs uppercase tracking-wider mb-2">{t('rutas.poi')}</p>
+                  <ul class="space-y-1">
+                    {ruta.data.puntos_interes.map(poi => (
+                      <li class="flex items-center gap-2 text-slate-300 text-sm">
+                        <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+                        {poi}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Wikiloc link */}
+              {ruta.data.wikiloc_url && (
+                <a
+                  href={ruta.data.wikiloc_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm font-bold uppercase tracking-wide hover:bg-red-500/20 transition-colors"
+                >
+                  {t('rutas.ver_wikiloc')}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              )}
+
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  )}
+
+</section>
+
+{/* Lightbox modal */}
+<div
+  id="ruta-lightbox"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Imagen ampliada"
+>
+  <button
+    id="ruta-lightbox-close"
+    class="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
+    aria-label="Cerrar"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <img
+    id="ruta-lightbox-img"
+    src=""
+    alt=""
+    class="w-full max-w-5xl max-h-[90vh] rounded-xl shadow-2xl object-contain"
+  />
+</div>
+
+<script>
+  const lightbox = document.getElementById('ruta-lightbox') as HTMLElement;
+  const lightboxImg = document.getElementById('ruta-lightbox-img') as HTMLImageElement;
+  const closeBtn = document.getElementById('ruta-lightbox-close') as HTMLButtonElement;
+
+  function openLightbox(src: string, alt: string) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt;
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-lightbox-src]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      openLightbox(btn.dataset.lightboxSrc!, btn.dataset.lightboxAlt!);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>

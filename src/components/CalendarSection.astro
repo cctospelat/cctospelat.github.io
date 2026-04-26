@@ -1,0 +1,86 @@
+---
+import { getCollection, render } from 'astro:content';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const calendarEntries = await getCollection('calendario', ({ id }) => id.split('/')[0] === lang);
+
+const sortedRaces = calendarEntries.sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf()).slice(0, 10);
+
+const locale = lang === 'ca' ? 'ca-ES' : lang === 'es' ? 'es-ES' : lang === 'en' ? 'en-GB' : 'fr-FR';
+
+const formatDay = (date: Date) => {
+  return new Intl.DateTimeFormat(locale, { day: '2-digit' }).format(date);
+};
+const formatMonth = (date: Date) => {
+  return new Intl.DateTimeFormat(locale, { month: 'short' }).format(date).toUpperCase();
+};
+---
+
+<section id="calendario" class="py-24 bg-white relative">
+  <div class="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
+
+    <div class="text-center mb-16">
+      <span class="text-red-500 font-display font-bold uppercase tracking-[0.3em] text-sm">{t('calendar.label')}</span>
+      <h2 class="font-display font-black uppercase tracking-wide text-4xl lg:text-5xl text-slate-800 mt-1 mb-4">{t('calendar.title')}</h2>
+      <div class="w-12 h-1 bg-red-500 mx-auto"></div>
+      <p class="text-slate-500 mt-6 text-base">{t('calendar.subtitle')}</p>
+    </div>
+
+    <div class="space-y-4">
+      {sortedRaces.map(async (race, index) => {
+        const { Content } = await render(race);
+        return (
+          <div class="group relative bg-white border-2 border-slate-100 rounded-2xl overflow-hidden hover:border-red-500 hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row">
+            {/* Race number + Date Block - bib style */}
+            <div class="flex-shrink-0 flex flex-row md:flex-col items-center justify-center bg-red-500 group-hover:bg-red-600 transition-colors text-white px-6 py-4 md:py-6 md:min-w-[110px] gap-4 md:gap-1">
+              <span class="font-display font-black text-xs uppercase tracking-widest text-red-200 hidden md:block">#{String(index + 1).padStart(2, '0')}</span>
+              <span class="font-display font-black text-4xl md:text-5xl leading-none">{formatDay(race.data.date)}</span>
+              <span class="font-display font-bold text-sm md:text-base tracking-widest text-red-200">{formatMonth(race.data.date)}</span>
+            </div>
+
+            {/* Info Block */}
+            <div class="flex-grow p-5 md:p-6 flex flex-col justify-center">
+              <h3 class="font-display font-black uppercase tracking-wide text-xl md:text-2xl text-slate-800 group-hover:text-red-600 transition-colors leading-tight mb-2">
+                {race.data.url ? (
+                  <a href={race.data.url} target="_blank" rel="noopener noreferrer">
+                    {race.data.title}
+                  </a>
+                ) : (
+                  <span>{race.data.title}</span>
+                )}
+              </h3>
+
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-slate-500 font-medium mb-2">
+                <div class="flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-500 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  {race.data.location}
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" x2="4" y1="22" y2="15"></line></svg>
+                  <span class="font-bold text-slate-700">{race.data.distance}</span>
+                </div>
+              </div>
+
+              <div class="prose prose-sm prose-slate prose-p:leading-relaxed prose-p:my-0 text-slate-600">
+                <Content />
+              </div>
+            </div>
+
+            {/* Action */}
+            {race.data.url && (
+              <div class="flex-shrink-0 flex items-center justify-center px-5 py-4 md:py-0 border-t md:border-t-0 md:border-l border-slate-100 group-hover:border-red-100 transition-colors">
+                <a href={race.data.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 hover:bg-red-500 text-slate-600 hover:text-white font-display font-bold uppercase tracking-wide text-sm transition-all duration-200">
+                  Info
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"></path><path d="m21 3-9 9"></path><path d="M15 3h6v6"></path></svg>
+                </a>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

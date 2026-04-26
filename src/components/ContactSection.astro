@@ -1,0 +1,95 @@
+---
+import { getCollection, render } from 'astro:content';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const contactEntries = await getCollection('contacto', ({ id }) => id.split('/')[0] === lang);
+
+const contact = contactEntries[0];
+
+if (!contact) {
+  throw new Error(`No contact data found for language ${lang}.`);
+}
+
+const { Content } = await render(contact);
+---
+
+<section id="contacto" class="py-24 bg-slate-900 text-slate-300 relative overflow-hidden">
+  {/* Decorative blobs */}
+  <div class="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 rounded-full bg-red-700/20 blur-3xl"></div>
+  <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-emerald-600/20 blur-3xl"></div>
+
+  <div class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+      {/* Intro Text */}
+      <div>
+        <span class="text-red-400 font-display font-bold uppercase tracking-[0.3em] text-sm">{t('contact.join')}</span>
+        <h2 class="font-display font-black uppercase tracking-wide text-4xl lg:text-5xl text-white mt-1 mb-4">{t('contact.title')}</h2>
+        <div class="w-12 h-1 bg-red-500 mb-6"></div>
+        <div class="prose prose-lg prose-invert prose-p:leading-relaxed prose-p:mt-0 prose-p:mb-4 prose-p:text-slate-400 mb-10">
+          <Content />
+        </div>
+        
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="bg-slate-800 p-3 rounded-xl text-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">{t('contact.info.phone')}</p>
+              <p class="text-white text-lg font-medium">{contact.data.phone}</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="bg-slate-800 p-3 rounded-xl text-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">{t('contact.info.email')}</p>
+              <a href={`mailto:${contact.data.email}`} class="text-white text-lg font-medium hover:text-red-500 transition-colors">{contact.data.email}</a>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="bg-slate-800 p-3 rounded-xl text-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">{t('contact.info.location')}</p>
+              <p class="text-white text-lg font-medium">{contact.data.address}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Contact Form Placeholder */}
+      <div class="bg-slate-800 rounded-3xl p-8 border border-slate-700 shadow-2xl relative">
+        <h3 class="font-display font-black uppercase tracking-wide text-2xl text-white mb-6">{t('contact.form.title')}</h3>
+        <form class="space-y-6" onsubmit="event.preventDefault(); alert('Mensaje enviado (simulación)');">
+          <div>
+            <label for="name" class="block text-sm font-medium text-slate-300 mb-2">{t('contact.form.name')}</label>
+            <input type="text" id="name" name="name" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" placeholder={t('contact.form.name_placeholder')} required>
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-slate-300 mb-2">{t('contact.form.email')}</label>
+            <input type="email" id="email" name="email" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" placeholder="tucorreo@ejemplo.com" required>
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-slate-300 mb-2">{t('contact.form.message')}</label>
+            <textarea id="message" name="message" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all" placeholder={t('contact.form.message_placeholder')} required></textarea>
+          </div>
+          <button type="submit" class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-xl transition-colors shadow-lg shadow-red-500/30 flex justify-center items-center gap-2">
+            {t('contact.form.send')}
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+

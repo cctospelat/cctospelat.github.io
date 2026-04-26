@@ -1,0 +1,192 @@
+17:38:12 [content] Syncing content
+17:38:12 [content] Synced content
+17:38:12 [types] Generated 539ms
+17:38:12 [check] Getting diagnostics for Astro files in /home/vicent/projects/cctospelat/website...
+[96msrc/content.config.ts[0m:[93m52[0m:[93m26[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; hostname?: RegExp | undefined; protocol?: RegExp | undefined; normalize?: boolean | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m52[0m     facebook: z.string().url().optional(),
+[7m  [0m [93m                         ~~~[0m
+[96msrc/content.config.ts[0m:[93m52[0m:[93m15[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m52[0m     facebook: z.string().url().optional(),
+[7m  [0m [93m              ~[0m
+[96msrc/content.config.ts[0m:[93m51[0m:[93m27[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; hostname?: RegExp | undefined; protocol?: RegExp | undefined; normalize?: boolean | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m51[0m     instagram: z.string().url().optional(),
+[7m  [0m [93m                          ~~~[0m
+[96msrc/content.config.ts[0m:[93m51[0m:[93m16[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m51[0m     instagram: z.string().url().optional(),
+[7m  [0m [93m               ~[0m
+[96msrc/content.config.ts[0m:[93m50[0m:[93m14[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m50[0m     address: z.string(),
+[7m  [0m [93m             ~[0m
+[96msrc/content.config.ts[0m:[93m49[0m:[93m12[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m49[0m     phone: z.string(),
+[7m  [0m [93m           ~[0m
+[96msrc/content.config.ts[0m:[93m48[0m:[93m23[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; error?: string | $ZodErrorMap<$ZodIssueInvalidStringFormat> | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m48[0m     email: z.string().email(),
+[7m  [0m [93m                      ~~~~~[0m
+[96msrc/content.config.ts[0m:[93m48[0m:[93m12[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m48[0m     email: z.string().email(),
+[7m  [0m [93m           ~[0m
+[96msrc/content.config.ts[0m:[93m47[0m:[93m11[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m47[0m   schema: z.object({
+[7m  [0m [93m          ~[0m
+[96msrc/content.config.ts[0m:[93m45[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'contact' is declared but its value is never read.
+
+[7m45[0m const contact = defineCollection({
+[7m  [0m [93m      ~~~~~~~[0m
+[96msrc/content.config.ts[0m:[93m41[0m:[93m21[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; hostname?: RegExp | undefined; protocol?: RegExp | undefined; normalize?: boolean | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m41[0m     url: z.string().url().optional(),
+[7m  [0m [93m                    ~~~[0m
+[96msrc/content.config.ts[0m:[93m41[0m:[93m10[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m41[0m     url: z.string().url().optional(),
+[7m  [0m [93m         ~[0m
+[96msrc/content.config.ts[0m:[93m40[0m:[93m15[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m40[0m     distance: z.string(),
+[7m  [0m [93m              ~[0m
+[96msrc/content.config.ts[0m:[93m39[0m:[93m15[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m39[0m     location: z.string(),
+[7m  [0m [93m              ~[0m
+[96msrc/content.config.ts[0m:[93m38[0m:[93m11[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m38[0m     date: z.date(),
+[7m  [0m [93m          ~[0m
+[96msrc/content.config.ts[0m:[93m37[0m:[93m12[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m37[0m     title: z.string(),
+[7m  [0m [93m           ~[0m
+[96msrc/content.config.ts[0m:[93m36[0m:[93m11[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m36[0m   schema: z.object({
+[7m  [0m [93m          ~[0m
+[96msrc/content.config.ts[0m:[93m30[0m:[93m12[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m30[0m     image: z.string().optional(),
+[7m  [0m [93m           ~[0m
+[96msrc/content.config.ts[0m:[93m29[0m:[93m14[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m29[0m     summary: z.string(),
+[7m  [0m [93m             ~[0m
+[96msrc/content.config.ts[0m:[93m28[0m:[93m11[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m28[0m     date: z.date(),
+[7m  [0m [93m          ~[0m
+[96msrc/content.config.ts[0m:[93m27[0m:[93m12[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m27[0m     title: z.string(),
+[7m  [0m [93m           ~[0m
+[96msrc/content.config.ts[0m:[93m26[0m:[93m11[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m26[0m   schema: z.object({
+[7m  [0m [93m          ~[0m
+[96msrc/content.config.ts[0m:[93m20[0m:[93m26[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; hostname?: RegExp | undefined; protocol?: RegExp | undefined; normalize?: boolean | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m20[0m     facebook: z.string().url().optional(),
+[7m  [0m [93m                         ~~~[0m
+[96msrc/content.config.ts[0m:[93m20[0m:[93m15[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m20[0m     facebook: z.string().url().optional(),
+[7m  [0m [93m              ~[0m
+[96msrc/content.config.ts[0m:[93m19[0m:[93m27[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; hostname?: RegExp | undefined; protocol?: RegExp | undefined; normalize?: boolean | undefined; error?: string | ... 1 more ... | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m19[0m     instagram: z.string().url().optional(),
+[7m  [0m [93m                          ~~~[0m
+[96msrc/content.config.ts[0m:[93m19[0m:[93m16[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m19[0m     instagram: z.string().url().optional(),
+[7m  [0m [93m               ~[0m
+[96msrc/content.config.ts[0m:[93m18[0m:[93m14[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m18[0m     address: z.string(),
+[7m  [0m [93m             ~[0m
+[96msrc/content.config.ts[0m:[93m17[0m:[93m12[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m17[0m     phone: z.string(),
+[7m  [0m [93m           ~[0m
+[96msrc/content.config.ts[0m:[93m16[0m:[93m23[0m - [93mwarning[0m[90m ts(6385): [0m'(params?: string | { abort?: boolean | undefined; pattern?: RegExp | undefined; error?: string | $ZodErrorMap<$ZodIssueInvalidStringFormat> | undefined; message?: string | undefined; } | undefined): ZodString' is deprecated.
+
+[7m16[0m     email: z.string().email(),
+[7m  [0m [93m                      ~~~~~[0m
+[96msrc/content.config.ts[0m:[93m16[0m:[93m12[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m16[0m     email: z.string().email(),
+[7m  [0m [93m           ~[0m
+[96msrc/content.config.ts[0m:[93m15[0m:[93m11[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m15[0m   schema: z.object({
+[7m  [0m [93m          ~[0m
+[96msrc/content.config.ts[0m:[93m9[0m:[93m12[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m9[0m     image: z.string().optional(),
+[7m [0m [93m           ~[0m
+[96msrc/content.config.ts[0m:[93m8[0m:[93m15[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m8[0m     subtitle: z.string(),
+[7m [0m [93m              ~[0m
+[96msrc/content.config.ts[0m:[93m7[0m:[93m12[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m7[0m     title: z.string(),
+[7m [0m [93m           ~[0m
+[96msrc/content.config.ts[0m:[93m6[0m:[93m11[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m6[0m   schema: z.object({
+[7m [0m [93m          ~[0m
+[96msrc/content.config.ts[0m:[93m1[0m:[93m28[0m - [93mwarning[0m[90m ts(6385): [0m'z' is deprecated.
+
+[7m1[0m import { defineCollection, z } from 'astro:content';
+[7m [0m [93m                           ~[0m
+
+[96msrc/components/ContactSection.astro[0m:[93m56[0m:[93m71[0m - [91merror[0m[90m ts(2339): [0mProperty 'address' does not exist on type '{ title: string; subtitle: string; image?: string | undefined; } | { email: string; phone: string; address: string; instagram?: string | undefined; facebook?: string | undefined; } | { title: string; date: Date; summary: string; image?: string | undefined; } | { ...; }'.
+  Property 'address' does not exist on type '{ title: string; subtitle: string; image?: string | undefined; }'.
+
+[7m56[0m               <p class="text-white text-lg font-medium">{contact.data.address}</p>
+[7m  [0m [91m                                                                      ~~~~~~~[0m
+[96msrc/components/ContactSection.astro[0m:[93m46[0m:[93m146[0m - [91merror[0m[90m ts(2339): [0mProperty 'email' does not exist on type '{ title: string; subtitle: string; image?: string | undefined; } | { email: string; phone: string; address: string; instagram?: string | undefined; facebook?: string | undefined; } | { title: string; date: Date; summary: string; image?: string | undefined; } | { ...; }'.
+  Property 'email' does not exist on type '{ title: string; subtitle: string; image?: string | undefined; }'.
+
+[7m46[0m               <a href={`mailto:${contact.data.email}`} class="text-white text-lg font-medium hover:text-red-500 transition-colors">{contact.data.email}</a>
+[7m  [0m [91m                                                                                                                                                 ~~~~~[0m
+[96msrc/components/ContactSection.astro[0m:[93m46[0m:[93m47[0m - [91merror[0m[90m ts(2339): [0mProperty 'email' does not exist on type '{ title: string; subtitle: string; image?: string | undefined; } | { email: string; phone: string; address: string; instagram?: string | undefined; facebook?: string | undefined; } | { title: string; date: Date; summary: string; image?: string | undefined; } | { ...; }'.
+  Property 'email' does not exist on type '{ title: string; subtitle: string; image?: string | undefined; }'.
+
+[7m46[0m               <a href={`mailto:${contact.data.email}`} class="text-white text-lg font-medium hover:text-red-500 transition-colors">{contact.data.email}</a>
+[7m  [0m [91m                                              ~~~~~[0m
+[96msrc/components/ContactSection.astro[0m:[93m36[0m:[93m71[0m - [91merror[0m[90m ts(2339): [0mProperty 'phone' does not exist on type '{ title: string; subtitle: string; image?: string | undefined; } | { email: string; phone: string; address: string; instagram?: string | undefined; facebook?: string | undefined; } | { title: string; date: Date; summary: string; image?: string | undefined; } | { ...; }'.
+  Property 'phone' does not exist on type '{ title: string; subtitle: string; image?: string | undefined; }'.
+
+[7m36[0m               <p class="text-white text-lg font-medium">{contact.data.phone}</p>
+[7m  [0m [91m                                                                      ~~~~~[0m
+[96msrc/components/ContactSection.astro[0m:[93m4[0m:[93m44[0m - [91merror[0m[90m ts(2769): [0mNo overload matches this call.
+  Overload 1 of 2, '(collection: keyof DataEntryMap, filter?: ((entry: { id: string; body?: string | undefined; collection: "calendar"; data: { title: string; date: Date; location: string; distance: string; url?: string | undefined; }; rendered?: RenderedContent | undefined; filePath?: string | undefined; } | { ...; } | { ...; } | { ...; }) => entry is { ...; } | ... 2 more ... | { ...; }) | undefined): Promise<...>', gave the following error.
+    Argument of type '"contact"' is not assignable to parameter of type 'keyof DataEntryMap'.
+  Overload 2 of 2, '(collection: keyof DataEntryMap, filter?: ((entry: { id: string; body?: string | undefined; collection: "calendar"; data: { title: string; date: Date; location: string; distance: string; url?: string | undefined; }; rendered?: RenderedContent | undefined; filePath?: string | undefined; } | { ...; } | { ...; } | { ...; }) => unknown) | undefined): Promise<...>', gave the following error.
+    Argument of type '"contact"' is not assignable to parameter of type 'keyof DataEntryMap'.
+
+[7m4[0m const contactEntries = await getCollection('contact');
+[7m [0m [91m                                           ~~~~~~~~~[0m
+[96msrc/components/ContactSection.astro[0m:[93m65[0m:[93m43[0m - [93mwarning[0m[90m ts(6385): [0m'event' is deprecated.
+
+[7m65[0m         <form class="space-y-6" onsubmit="event.preventDefault(); alert('Mensaje enviado (simulación)');">
+[7m  [0m [93m                                          ~~~~~[0m
+
+[96msrc/pages/index.astro[0m:[93m8[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'ContactSection' is declared but its value is never read.
+
+[7m8[0m import ContactSection from '../components/ContactSection.astro';
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+Result (14 files): 
+- 5 errors
+- 0 warnings
+- 38 hints
+

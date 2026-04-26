@@ -1,0 +1,22 @@
+---
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<nav class="hidden md:flex space-x-8">
+  {[
+    { href: '#inicio', label: t('nav.inicio') },
+    { href: '#club', label: t('nav.club') },
+    { href: '#entrenamiento', label: t('nav.entrenamiento') },
+    { href: '#noticias', label: t('nav.noticias') },
+    { href: '#calendario', label: t('nav.calendario') },
+    { href: '#patrocinadores', label: t('nav.patrocinadores') },
+  ].map(({ href, label }) => (
+    <a href={href} class="relative text-sm font-display font-bold uppercase tracking-widest text-slate-600 hover:text-red-600 transition-colors duration-200 group py-1">
+      {label}
+      <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300 rounded-full"></span>
+    </a>
+  ))}
+</nav>
