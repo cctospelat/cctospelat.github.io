@@ -9,7 +9,6 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   site: 'https://cctospelat.github.io',
-  base: '/website',
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'ca', 'en', 'fr'],

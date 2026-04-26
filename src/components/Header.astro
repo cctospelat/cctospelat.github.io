@@ -8,7 +8,7 @@ import MobileMenu from './header/MobileMenu.astro';
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const homeUrl = lang === 'es' ? '/website/' : `/website/${lang}/`;
+const homeUrl = lang === 'es' ? '/' : `/${lang}/`;
 ---
 
 <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm transition-all duration-300">
@@ -25,10 +25,10 @@ const homeUrl = lang === 'es' ? '/website/' : `/website/${lang}/`;
       {/* Logo */}
       <div class="flex-shrink-0 flex items-center gap-4 sm:gap-6">
         <a href={homeUrl} class="flex items-center">
-          <img id="header-logo" src="/website/logos/logo1.svg" alt={t('header.logo_alt')} class="h-24 sm:h-40 w-auto transition-all duration-300 hover:scale-110" />
+          <img id="header-logo" src="/logos/logo1.svg" alt={t('header.logo_alt')} class="h-24 sm:h-40 w-auto transition-all duration-300 hover:scale-110" />
         </a>
         <div class="flex items-center">
-          <img id="header-sponsor" src="/website/fotos/content/2_colaboradores/sponsors/sponsor_1.svg" alt="Patrocinador principal" class="h-10 sm:h-16 w-auto transition-all duration-300 opacity-80 hover:opacity-100" />
+          <img id="header-sponsor" src="/fotos/content/2_colaboradores/sponsors/sponsor_1.svg" alt="Patrocinador principal" class="h-10 sm:h-16 w-auto transition-all duration-300 opacity-80 hover:opacity-100" />
         </div>
       </div>
 

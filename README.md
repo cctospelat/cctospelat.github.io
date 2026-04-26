@@ -75,10 +75,10 @@ public/fotos/content/
   7_contacto/
 ```
 
-En el fichero `.md`, la ruta siempre empieza por `/website/fotos/content/`. Por ejemplo, una imagen guardada en `public/fotos/content/5_noticias/foto.jpg` se referencia como:
+En el fichero `.md`, la ruta siempre empieza por `/fotos/content/`. Por ejemplo, una imagen guardada en `public/fotos/content/5_noticias/foto.jpg` se referencia como:
 
 ```
-image: "/website/fotos/content/5_noticias/foto.jpg"
+image: "/fotos/content/5_noticias/foto.jpg"
 ```
 
 ---
@@ -93,7 +93,7 @@ image: "/website/fotos/content/5_noticias/foto.jpg"
 title: "Título de la noticia"
 date: 2026-06-01
 summary: "Resumen breve que aparece en la tarjeta de noticias."
-image: "/website/fotos/content/5_noticias/nombre-imagen.jpg"
+image: "/fotos/content/5_noticias/nombre-imagen.jpg"
 ---
 
 Aquí el texto completo de la noticia, en formato libre.
@@ -148,7 +148,7 @@ tipo_ruta: "Circular"
 puntos_interes:
   - "Punto de interés 1"
   - "Punto de interés 2"
-imagen: "/website/fotos/content/4_rutas/nombre-imagen.jpg"
+imagen: "/fotos/content/4_rutas/nombre-imagen.jpg"
 wikiloc_url: "https://es.wikiloc.com/rutas-running/..."
 ---
 

@@ -38,7 +38,7 @@ Components filter collection entries by language using the `id` prefix (e.g., `e
 
 ### Static Assets
 
-Public assets are served under `/website/` prefix (e.g., `/website/favicon.ico`, `/website/news/post-1.png`). This matches the `base` path used in `Layout.astro`.
+Public assets in `public/` are served at the root path (e.g., `/favicon.ico`, `/logos/logo1.svg`, `/fotos/content/...`). The site is deployed to `https://cctospelat.github.io` with no base path.
 
 ### Adding Content
 
