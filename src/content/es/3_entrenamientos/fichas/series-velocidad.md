@@ -1,6 +1,6 @@
 ---
 nombre: "Series de Velocidad"
-imagen: "/website/fotos/content/3_entrenamientos/ejercicio_2.png"
+imagen: "/fotos/content/3_entrenamientos/ejercicio_2.png"
 ejecucion:
   - "Calienta al menos 15 minutos con trote suave y ejercicios de movilidad"
   - "Realiza 4-6 series de 400 m al 85-90% de tu ritmo máximo"

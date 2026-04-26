@@ -2,7 +2,7 @@
 title: "Great Success at the Local Half Marathon"
 date: 2026-02-15
 summary: "More than 30 club members crossed the finish line beating their personal bests. Congratulations team!"
-image: "/website/fotos/content/5_noticias/post-2.png"
+image: "/fotos/content/5_noticias/post-2.png"
 ---
 
 Last weekend was unforgettable for **C.C. Tospelat**. 

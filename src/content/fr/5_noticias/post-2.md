@@ -2,7 +2,7 @@
 title: "Grand succès au Semi-Marathon Local"
 date: 2026-02-15
 summary: "Plus de 30 membres du club ont franchi la ligne d'arrivée en battant leurs records personnels. Félicitations à l'équipe !"
-image: "/website/fotos/content/5_noticias/post-2.png"
+image: "/fotos/content/5_noticias/post-2.png"
 ---
 
 Le week-end dernier a été inoubliable pour le **C.C. Tospelat**. 

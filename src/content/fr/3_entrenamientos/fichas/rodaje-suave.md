@@ -1,6 +1,6 @@
 ---
 nombre: "Footing Facile"
-imagen: "/website/fotos/content/3_entrenamientos/rodaje-suave.jpg"
+imagen: "/fotos/content/3_entrenamientos/ejercicio_1.png"
 ejecucion:
   - "Échauffez-vous 5-10 minutes en marchant ou en trottinant très doucement"
   - "Maintenez une allure conversationnelle : vous devez pouvoir parler confortablement"

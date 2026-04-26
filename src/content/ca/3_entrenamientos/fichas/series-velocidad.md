@@ -1,6 +1,6 @@
 ---
 nombre: "Sèries de Velocitat"
-imagen: "/website/fotos/content/3_entrenamientos/series-velocidad.jpg"
+imagen: "/fotos/content/3_entrenamientos/ejercicio_2.png"
 ejecucion:
   - "Escalfa almenys 15 minuts amb trote suau i exercicis de mobilitat"
   - "Realitza 4-6 sèries de 400 m al 85-90% del teu ritme màxim"
