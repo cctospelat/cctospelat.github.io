@@ -39,17 +39,6 @@ const calendario = defineCollection({
   }),
 });
 
-const contacto = defineCollection({
-  loader: glob({ pattern: "**/7_contacto/*.md", base: "src/content" }),
-  schema: z.object({
-    email: z.string().email(),
-    phone: z.string(),
-    address: z.string(),
-    instagram: z.string().url().optional(),
-    facebook: z.string().url().optional(),
-  }),
-});
-
 const colaboradores = defineCollection({
   loader: glob({ pattern: "**/2_colaboradores/*.md", base: "src/content" }),
   schema: z.object({
@@ -88,4 +77,4 @@ const fichas = defineCollection({
   }),
 });
 
-export const collections = { club, entrenamiento, noticias, calendario, contacto, colaboradores, rutas, fichas };
+export const collections = { club, entrenamiento, noticias, calendario, colaboradores, rutas, fichas };
