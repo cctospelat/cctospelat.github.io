@@ -2,7 +2,7 @@
 title: "Nuevas equipaciones C.C. Tospelat para la temporada"
 date: 2026-03-20
 summary: "Presentamos nuestras nuevas camisetas técnicas para la próxima temporada de carreras. ¡Un diseño fresco e innovador! Javi S."
-image: "/website/fotos/content/5_noticias/post-1.png"
+image: "/fotos/content/5_noticias/post-1.png"
 ---
 
 Estamos muy emocionados de desvelar la nueva camiseta oficial de nuestro club de running **C.C. Tospelat**. 

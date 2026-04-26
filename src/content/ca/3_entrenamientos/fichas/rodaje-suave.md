@@ -1,6 +1,6 @@
 ---
 nombre: "Rodatge Suau"
-imagen: "/website/fotos/content/3_entrenamientos/rodaje-suave.jpg"
+imagen: "/fotos/content/3_entrenamientos/ejercicio_1.png"
 ejecucion:
   - "Escalfa 5-10 minuts caminant o trotant molt suau"
   - "Manté un ritme conversacional: has de poder parlar amb comoditat"

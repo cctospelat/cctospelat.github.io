@@ -1,7 +1,7 @@
 ---
 title: "Nuestra piel"
 subtitle: "Valores y objetivos que guían nuestro club."
-image: "/website/fotos/content/1_club/commitment.png"
+image: "/fotos/content/1_club/commitment.png"
 ---
 
 Tos Pelat sigue rindiendo honor a sus colores: rojo, blanco y negro, en 1996 sus fundadores decidieran que representarían

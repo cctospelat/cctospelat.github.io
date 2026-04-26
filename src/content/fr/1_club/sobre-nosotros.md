@@ -1,7 +1,7 @@
 ---
 title: "À Propos de Nous"
 subtitle: "Découvrez l'histoire et l'équipe derrière le C.C. Tospelat."
-image: "/website/fotos/content/1_club/grupo2.webp"
+image: "/fotos/content/1_club/grupo2.webp"
 ---
 
 Tos Pelat est un club de running né dans le but de promouvoir la pratique sportive et de favoriser un mode de vie sain parmi ses membres. 

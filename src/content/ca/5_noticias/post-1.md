@@ -2,7 +2,7 @@
 title: "Noves equipacions C.C. Tospelat per a la temporada"
 date: 2026-03-20
 summary: "Presentem les nostres noves samarretes tècniques per a la pròxima temporada de carreres. Un disseny fresc i innovador! Javi S."
-image: "/website/fotos/content/5_noticias/post-1.png"
+image: "/fotos/content/5_noticias/post-1.png"
 ---
 
 Estem molt emocionats de desvelar la nova samarreta oficial del nostre club de running **C.C. Tospelat**. 

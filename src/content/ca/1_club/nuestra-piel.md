@@ -1,7 +1,7 @@
 ---
 title: "La nostra pell"
 subtitle: "Valors i objectius que guien el nostre club."
-image: "/website/fotos/content/1_club/commitment.png"
+image: "/fotos/content/1_club/commitment.png"
 ---
 
 Tos Pelat continua rendint honor als seus colors: roig, blanc i negre, en 1996 els seus fundadors decidiren que representarien

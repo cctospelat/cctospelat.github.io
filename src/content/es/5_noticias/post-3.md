@@ -2,7 +2,7 @@
 title: "Nuevas equipaciones C.C. Tospelat por ALS Sport"
 date: 2026-03-14
 summary: "Presentamos nuestras nuevas camisetas técnicas para la próxima temporada de carreras. ¡Un diseño fresco e innovador! Javi S."
-image: "/website/fotos/content/5_noticias/Camiseta_2026.png"
+image: "/fotos/content/5_noticias/Camiseta_2026.png"
 ---
 
 Estamos muy emocionados de desvelar la nueva camiseta oficial de nuestro club de running **C.C. Tospelat**. 

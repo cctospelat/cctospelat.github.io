@@ -2,7 +2,7 @@
 title: "New C.C. Tospelat Gear for the Season"
 date: 2026-03-20
 summary: "We present our new technical shirts for the upcoming racing season. A fresh and innovative design! Javi S."
-image: "/website/fotos/content/5_noticias/post-1.png"
+image: "/fotos/content/5_noticias/post-1.png"
 ---
 
 We are very excited to reveal the new official shirt for our running club **C.C. Tospelat**. 

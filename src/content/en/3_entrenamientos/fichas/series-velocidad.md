@@ -1,6 +1,6 @@
 ---
 nombre: "Speed Intervals"
-imagen: "/website/fotos/content/3_entrenamientos/ejercicio_2.png"
+imagen: "/fotos/content/3_entrenamientos/ejercicio_2.png"
 ejecucion:
   - "Warm up for at least 15 minutes with easy jogging and mobility drills"
   - "Run 4-6 repetitions of 400 m at 85-90% of your maximum pace"
