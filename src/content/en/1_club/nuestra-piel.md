@@ -1,7 +1,7 @@
 ---
 title: "Our Skin"
 subtitle: "Values and objectives that guide our club."
-image: "/website/fotos/content/1_club/commitment.png"
+image: "/fotos/content/1_club/commitment.png"
 ---
 
 Tos Pelat continues to honor its colors: red, white, and black. In 1996, its founders decided these would represent the club's identity.

@@ -1,6 +1,6 @@
 ---
 nombre: "Rodaje Suave"
-imagen: "/website/fotos/content/3_entrenamientos/ejercicio_1.png"
+imagen: "/fotos/content/3_entrenamientos/ejercicio_1.png"
 ejecucion:
   - "Calienta 5-10 minutos caminando o trotando muy suave"
   - "Mantén un ritmo conversacional: deberías poder hablar con comodidad"

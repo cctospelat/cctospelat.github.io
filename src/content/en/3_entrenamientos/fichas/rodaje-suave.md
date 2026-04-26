@@ -1,6 +1,6 @@
 ---
 nombre: "Easy Run"
-imagen: "/website/fotos/content/3_entrenamientos/ejercicio_1.png"
+imagen: "/fotos/content/3_entrenamientos/ejercicio_1.png"
 ejecucion:
   - "Warm up for 5-10 minutes walking or jogging very lightly"
   - "Keep a conversational pace: you should be able to speak comfortably"

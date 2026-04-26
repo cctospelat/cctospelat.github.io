@@ -1,7 +1,7 @@
 ---
 title: "El Nostre Compromís"
 subtitle: "Valors i objectius que guien el nostre club."
-image: "/website/fotos/content/1_club/commitment.png"
+image: "/fotos/content/1_club/commitment.png"
 ---
 
 En Tos Pelat entenem l'esport com una eina de transformació positiva, capaç de millorar la qualitat de vida de les persones i enfortir el teixit social del nostre entorn. El nostre compromís va més enllà de córrer: treballem per a fomentar hàbits saludables, promoure la inclusió i generar un impacte real en la comunitat.

@@ -2,7 +2,7 @@
 title: "Nouveaux équipements C.C. Tospelat par ALS Sport"
 date: 2026-03-14
 summary: "Nous présentons nos nouveaux maillots techniques pour la prochaine saison de courses. Un design frais et innovant ! Javi S."
-image: "/website/fotos/content/5_noticias/Camiseta_2026.png"
+image: "/fotos/content/5_noticias/Camiseta_2026.png"
 ---
 
 Nous sommes très heureux de dévoiler le nouveau maillot officiel de notre club de running **C.C. Tospelat**. 

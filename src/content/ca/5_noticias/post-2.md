@@ -2,7 +2,7 @@
 title: "Gran èxit en la Mitja Marató Local"
 date: 2026-02-15
 summary: "Més de 30 membres del club creuaren la meta batinguent les seues marques personals. Felicitats equip!"
-image: "/website/fotos/content/5_noticias/post-2.png"
+image: "/fotos/content/5_noticias/post-2.png"
 ---
 
 El passat cap de setmana ha sigut inoblidable per al **C.C. Tospelat**. 

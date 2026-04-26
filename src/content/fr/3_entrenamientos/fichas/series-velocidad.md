@@ -1,6 +1,6 @@
 ---
 nombre: "Séries de Vitesse"
-imagen: "/website/fotos/content/3_entrenamientos/series-velocidad.jpg"
+imagen: "/fotos/content/3_entrenamientos/ejercicio_2.png"
 ejecucion:
   - "Échauffez-vous au moins 15 minutes avec un footing léger et des exercices de mobilité"
   - "Réalisez 4-6 répétitions de 400 m à 85-90% de votre allure maximale"
