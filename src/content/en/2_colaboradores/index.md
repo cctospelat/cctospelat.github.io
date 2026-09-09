@@ -42,6 +42,8 @@ sponsors:
     logo: "/fotos/content/2_colaboradores/sponsors/sponsor_16.svg"
   - name: "Sponsor 17"
     logo: "/fotos/content/2_colaboradores/sponsors/sponsor_17.svg"
+  - name: "Sponsor 18"
+    logo: "/fotos/content/2_colaboradores/sponsors/sponsor_18.svg"
 ---
 
 The C.C. Tospelat Running Club wishes to express its deepest gratitude to all the companies, businesses, and collaborators who help sustain this project.
