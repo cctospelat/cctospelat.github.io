@@ -42,6 +42,8 @@ sponsors:
     logo: "/fotos/content/2_colaboradores/sponsors/sponsor_16.svg"
   - name: "Sponsor 17"
     logo: "/fotos/content/2_colaboradores/sponsors/sponsor_17.svg"
+  - name: "Sponsor 18"
+    logo: "/fotos/content/2_colaboradores/sponsors/sponsor_18.svg"
 ---
 
 Le Club de Running Tos Pelat souhaite exprimer sa plus profonde gratitude à tous les collaborateurs qui contribuent à consolider ce projet.
