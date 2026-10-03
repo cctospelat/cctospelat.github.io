@@ -5,15 +5,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```sh
-npm run dev       # Start local dev server at localhost:4321
-npm run build     # Build production site to ./dist/
-npm run preview   # Preview the production build locally
-npx astro check   # Type-check .astro files
+pnpm dev          # Start local dev server at localhost:4321
+pnpm build        # Build production site to ./dist/
+pnpm preview      # Preview the production build locally
+pnpm astro check  # Type-check .astro files
 ```
 
 ## Architecture
 
-This is an **Astro 6** static site for the C.C. Tospelat running club, using **Tailwind CSS v4** (via `@tailwindcss/vite`) and TypeScript.
+This is an **Astro 7** static site for the C.C. Tospelat running club, using **Tailwind CSS v4** (via `@tailwindcss/vite`) and TypeScript. Dependencies are managed with **pnpm** (see `packageManager` in `package.json`).
 
 ### Routing & i18n
 

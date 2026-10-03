@@ -3,8 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.12.0"
+    "node": "24.21.0"
   },
+  "packageManager": "pnpm@11.3.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -12,10 +13,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.8",
-    "@tailwindcss/vite": "^4.2.1",
-    "astro": "^6.0.4",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3"
+    "@astrojs/check": "0.9.10",
+    "@tailwindcss/vite": "4.3.3",
+    "astro": "7.3.5",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
   }
 }
