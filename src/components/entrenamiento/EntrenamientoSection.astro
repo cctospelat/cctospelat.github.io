@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeading from '../ui/SectionHeading.astro';
+import FichaCard from './FichaCard.astro';
+import RutaCard from './RutaCard.astro';
+import Lightbox from './Lightbox.astro';
+import { getLangFromUrl, isLang, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const [fichas, rutas] = await Promise.all([
+  getCollection('fichas', isLang(lang)),
+  getCollection('rutas', isLang(lang)),
+]);
+---
+
+<section id="entrenamiento" class="py-24 bg-slate-900 relative overflow-hidden">
+  {/* Decorative background */}
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-red-500/10 rounded-full -mr-24 -mt-24"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-red-500/5 rounded-full -ml-24 -mb-24"></div>
+    <div class="absolute right-8 top-1/2 -translate-y-1/2 font-display font-black text-[16rem] leading-none text-white/[0.03] select-none hidden xl:block">RUN</div>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 relative">
+    <SectionHeading label={t('entrenamiento.label')} title={t('nav.entrenamiento')} dark class="mb-16" />
+  </div>
+
+  {fichas.length > 0 && (
+    <div class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 relative mt-4">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-1 h-7 bg-emerald-500 rounded-full shrink-0"></div>
+        <span class="text-emerald-400 font-display font-bold uppercase tracking-[0.3em] text-sm">{t('entrenamiento.label')}</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {fichas.map((ficha) => <FichaCard {...ficha.data} />)}
+      </div>
+    </div>
+  )}
+
+  {rutas.length > 0 && (
+    <div class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 relative mt-16">
+      <div class="border-t border-slate-700/50 mb-16"></div>
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-1 h-7 bg-red-500 rounded-full shrink-0"></div>
+        <span class="text-red-400 font-display font-bold uppercase tracking-[0.3em] text-sm">Trail</span>
+        <h3 class="font-display font-black uppercase tracking-wide text-2xl text-white">{t('rutas.title')}</h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {rutas.map((ruta) => <RutaCard {...ruta.data} />)}
+      </div>
+    </div>
+  )}
+</section>
+
+<Lightbox />

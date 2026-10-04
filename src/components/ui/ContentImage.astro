@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import type { HTMLAttributes } from 'astro/types';
+import { resolveImage } from '../../utils/images';
+
+type Props = Omit<HTMLAttributes<'img'>, 'src' | 'width' | 'height'> & {
+  /** Content image path, e.g. `/fotos/content/1_club/grupo2.webp`. */
+  src: string;
+  alt: string;
+  /** Responsive `sizes` hint; widths are generated up to the original size. */
+  sizes?: string;
+  /** Fixed rendered width in CSS px (for small images like logos). */
+  width?: number;
+  height?: number;
+};
+
+const { src, sizes, width, height, ...attrs } = Astro.props;
+const image = resolveImage(src);
+---
+
+{
+  width || height ? (
+    <Image src={image} width={width} height={height} densities={[1, 2]} {...attrs} />
+  ) : (
+    <Image src={image} sizes={sizes ?? '100vw'} widths={[400, 800, 1200, 1600, 2400].filter((w) => w < image.width).concat(image.width)} {...attrs} />
+  )
+}

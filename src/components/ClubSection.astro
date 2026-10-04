@@ -1,0 +1,39 @@
+---
+import { getEntry, render } from 'astro:content';
+import SectionHeading from './ui/SectionHeading.astro';
+import EquipacionImages from './EquipacionImages.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const sections = await Promise.all(
+  ([
+    ['sobre-nosotros', t('club.title')],
+    ['compromiso', t('club.commitment')],
+    ['nuestra-piel', t('club.skin')],
+  ] as const).map(async ([slug, title]) => {
+    const entry = await getEntry('club', `${lang}/1_club/${slug}`);
+    if (!entry) {
+      throw new Error(`Missing src/content/${lang}/1_club/${slug}.md`);
+    }
+    const { Content } = await render(entry);
+    return { title, Content };
+  }),
+);
+---
+
+<section id="club" class="py-24 bg-white relative border-t border-slate-100">
+  <div class="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 text-center">
+    {sections.map(({ title, Content }, i) => (
+      <>
+        <SectionHeading label={t('nav.club')} title={title} class="mb-16" />
+        <div class:list={['club-prose mx-auto max-w-2xl text-center', i < sections.length - 1 ? 'mb-20' : 'mb-12']}>
+          <Content />
+        </div>
+      </>
+    ))}
+
+    <EquipacionImages />
+  </div>
+</section>

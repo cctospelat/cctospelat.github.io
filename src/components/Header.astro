@@ -1,17 +1,18 @@
 ---
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { Image } from 'astro:assets';
 import SocialIcons from './header/SocialIcons.astro';
 import LanguageSelector from './header/LanguageSelector.astro';
 import DesktopNav from './header/DesktopNav.astro';
 import MobileMenu from './header/MobileMenu.astro';
+import logo from '../assets/logos/logo1.png';
+import mainSponsor from '../assets/fotos/content/2_colaboradores/sponsors/sponsor_1.png';
+import { getHomeUrl, getLangFromUrl, useTranslations } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-const homeUrl = lang === 'es' ? '/' : `/${lang}/`;
 ---
 
-<header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm transition-all duration-300">
+<header id="site-header" class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
   {/* Social Media Top Bar */}
   <div class="bg-slate-950 text-white py-2">
     <div class="max-w-[1172px] mx-auto px-5 sm:px-6 lg:px-8 flex justify-end items-center space-x-8">
@@ -21,15 +22,12 @@ const homeUrl = lang === 'es' ? '/' : `/${lang}/`;
   </div>
 
   <div class="max-w-[1172px] mx-auto px-5 sm:px-6 lg:px-8">
-    <div id="header-nav" class="flex justify-between h-24 sm:h-40 items-center transition-all duration-300 relative">
-      {/* Logo */}
+    <div class="header-nav flex justify-between h-24 sm:h-40 items-center transition-all duration-300 relative">
       <div class="flex-shrink-0 flex items-center gap-4 sm:gap-6">
-        <a href={homeUrl} class="flex items-center">
-          <img id="header-logo" src="/logos/logo1.svg" alt={t('header.logo_alt')} class="h-24 sm:h-40 w-auto transition-all duration-300 hover:scale-110" />
+        <a href={getHomeUrl(lang)} class="flex items-center">
+          <Image src={logo} alt={t('header.logo_alt')} height={160} densities={[1, 2]} loading="eager" fetchpriority="high" class="header-logo h-24 sm:h-40 w-auto transition-all duration-300 hover:scale-110" />
         </a>
-        <div class="flex items-center">
-          <img id="header-sponsor" src="/fotos/content/2_colaboradores/sponsors/sponsor_1.svg" alt="Patrocinador principal" class="h-10 sm:h-16 w-auto transition-all duration-300 opacity-80 hover:opacity-100" />
-        </div>
+        <Image src={mainSponsor} alt="Patrocinador principal" height={64} densities={[1, 2]} loading="eager" class="header-sponsor h-10 sm:h-16 w-auto transition-all duration-300 opacity-80 hover:opacity-100" />
       </div>
 
       <DesktopNav />
@@ -39,74 +37,45 @@ const homeUrl = lang === 'es' ? '/' : `/${lang}/`;
 </header>
 
 <style>
-  /* Handle desktop scroll state for heights */
-  @media (min-width: 640px) {
-    header.scrolled #header-nav {
-      height: 5rem; /* h-20 */
-    }
-    header.scrolled #header-logo {
-      height: 5rem; /* h-20 */
-    }
-    header.scrolled #header-sponsor {
-      height: 2.5rem; /* h-10 */
-    }
+  /* Compact header once the page is scrolled */
+  .scrolled .header-nav,
+  .scrolled .header-logo {
+    height: 4rem;
+  }
+  .scrolled .header-sponsor {
+    height: 2rem;
   }
 
-  /* Handle mobile scroll state for heights - even smaller than normal mobile */
-  @media (max-width: 639.9px) {
-    header.scrolled #header-nav {
-      height: 4rem; /* h-16 */
+  @media (min-width: 640px) {
+    .scrolled .header-nav,
+    .scrolled .header-logo {
+      height: 5rem;
     }
-    header.scrolled #header-logo {
-      height: 4rem; /* h-16 */
-    }
-    header.scrolled #header-sponsor {
-      height: 2rem; /* h-8 */
+    .scrolled .header-sponsor {
+      height: 2.5rem;
     }
   }
 </style>
 
 <script>
-  // Handle scroll to change header height and keep scroll-padding-top in sync
-  function setupHeaderScroll() {
-    const headerNav = document.getElementById('header-nav');
-    const headerLogo = document.getElementById('header-logo');
-    const headerSponsor = document.getElementById('header-sponsor');
-    const header = headerNav?.closest('header');
+  const header = document.getElementById('site-header')!;
 
-    function updateScrollPadding() {
-      const totalHeight = header?.getBoundingClientRect().height ?? 0;
-      document.documentElement.style.scrollPaddingTop = `${totalHeight}px`;
-    }
+  // Keep anchor jumps clear of the sticky header, whatever its current height.
+  new ResizeObserver(() => {
+    document.documentElement.style.scrollPaddingTop = `${header.offsetHeight}px`;
+  }).observe(header);
 
-    function onScroll() {
-      if (window.scrollY > 50) {
-        header?.classList.add('scrolled');
-      } else {
-        header?.classList.remove('scrolled');
-      }
-      updateScrollPadding();
-    }
-
-    // Set initial padding based on current header height
-    updateScrollPadding();
-    window.addEventListener('scroll', onScroll);
-
-    // Also intercept anchor clicks so the scroll offset is applied correctly
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const id = (link as HTMLAnchorElement).getAttribute('href')?.slice(1);
-        if (!id) return;
-        const target = document.getElementById(id);
-        if (!target) return;
-        e.preventDefault();
-        const headerHeight = header?.getBoundingClientRect().height ?? 0;
-        const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
-        window.scrollTo({ top, behavior: 'smooth' });
+  let ticking = false;
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        header.classList.toggle('scrolled', window.scrollY > 50);
+        ticking = false;
       });
-    });
-  }
-
-  setupHeaderScroll();
-  document.addEventListener('astro:after-swap', setupHeaderScroll);
+    },
+    { passive: true },
+  );
 </script>

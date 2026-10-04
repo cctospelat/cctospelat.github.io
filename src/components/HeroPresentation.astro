@@ -1,27 +1,16 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getEntry } from 'astro:content';
+import ContentImage from './ui/ContentImage.astro';
+import { JOIN_FORM_URL } from '../data/site';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const clubEntries = await getCollection('club', ({ id }) => id.split('/')[0] === lang);
-const sobreNosotrosEntry = clubEntries.find(entry => entry.id === `${lang}/1_club/sobre-nosotros`);
-const compromisoEntry = clubEntries.find(entry => entry.id === `${lang}/1_club/compromiso`);
-const coloresEntry = clubEntries.find(entry => entry.id === `${lang}/1_club/nuestra-piel`);
-
-if (!sobreNosotrosEntry || !compromisoEntry || !coloresEntry) {
-  throw new Error(`Missing club data for language ${lang}. Ensure files exist in src/content/${lang}/1_club/`);
+const hero = await getEntry('club', `${lang}/1_club/sobre-nosotros`);
+if (!hero) {
+  throw new Error(`Missing src/content/${lang}/1_club/sobre-nosotros.md`);
 }
-
-const { Content: SobreNosotrosContent } = await render(sobreNosotrosEntry);
-const { Content: CompromisoContent } = await render(compromisoEntry);
-const { Content: ColoresContent } = await render(coloresEntry);
-
-const hero = sobreNosotrosEntry;
-
-import EquipacionImages from './EquipacionImages.astro';
-import SponsorsCarousel from './SponsorsCarousel.astro';
 ---
 
 <section id="inicio" class="relative pt-14 lg:pt-24 overflow-hidden bg-white">
@@ -30,7 +19,6 @@ import SponsorsCarousel from './SponsorsCarousel.astro';
     <div class="absolute -top-32 -right-32 w-[500px] h-[500px] bg-red-500 rounded-full opacity-[0.04]"></div>
   </div>
 
-  {/* Text content — centrado */}
   <div class="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 relative text-center pb-12">
     {/* Badge */}
     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500 text-white text-sm font-bold mb-8 uppercase tracking-widest shadow-lg shadow-red-500/30">
@@ -40,7 +28,6 @@ import SponsorsCarousel from './SponsorsCarousel.astro';
       {t('hero.badge')} {new Date().getFullYear()}
     </div>
 
-    {/* Title */}
     <h1 class="font-display font-black uppercase tracking-wide leading-none mb-6">
       <div class="text-5xl lg:text-7xl text-slate-900 mb-1">{t('hero.title')}</div>
       <div class="text-4xl lg:text-6xl bg-gradient-to-r from-red-500 to-rose-500 bg-clip-text text-transparent mb-1">{t('hero.subtitle_part')}</div>
@@ -52,20 +39,21 @@ import SponsorsCarousel from './SponsorsCarousel.astro';
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="https://forms.gle/iHmHjzeY1EJfd7GC7" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center gap-2 px-8 py-4 text-base font-bold rounded-full text-white bg-red-500 hover:bg-slate-900 shadow-xl shadow-red-500/25 transition-all duration-300 hover:-translate-y-1 uppercase tracking-wider font-display">
+      <a href={JOIN_FORM_URL} target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center gap-2 px-8 py-4 text-base font-bold rounded-full text-white bg-red-500 hover:bg-slate-900 shadow-xl shadow-red-500/25 transition-all duration-300 hover:-translate-y-1 uppercase tracking-wider font-display">
         {t('hero.cta.join')}
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
   </div>
 
-  {/* Foto a ancho completo */}
   {hero.data.image && (
     <div class="relative w-full">
-      <img
+      <ContentImage
         src={hero.data.image}
         alt="C.C. Tospelat en acción"
         class="w-full h-auto object-contain"
+        loading="eager"
+        fetchpriority="high"
       />
       <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/70 to-transparent px-8 py-6 flex items-end justify-between">
         <div class="text-white">
@@ -79,41 +67,3 @@ import SponsorsCarousel from './SponsorsCarousel.astro';
     </div>
   )}
 </section>
-
-{/* Club Description Section */}
-<section id="club" class="py-24 bg-white relative border-t border-slate-100">
-  <div class="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 text-center">
-
-    <div class="mb-16">
-      <span class="text-red-500 font-display font-bold uppercase tracking-[0.3em] text-sm">{t('nav.club')}</span>
-      <h2 class="font-display font-black uppercase tracking-wide text-4xl lg:text-5xl text-slate-800 mt-1 mb-4">{t('club.title')}</h2>
-      <div class="w-12 h-1 bg-red-500 mx-auto"></div>
-    </div>
-    <div class="club-prose mx-auto max-w-2xl text-center mb-20">
-      <SobreNosotrosContent />
-    </div>
-
-    <div class="mb-16">
-      <span class="text-red-500 font-display font-bold uppercase tracking-[0.3em] text-sm">{t('nav.club')}</span>
-      <h2 class="font-display font-black uppercase tracking-wide text-4xl lg:text-5xl text-slate-800 mt-1 mb-4">{t('club.commitment')}</h2>
-      <div class="w-12 h-1 bg-red-500 mx-auto"></div>
-    </div>
-    <div class="club-prose mx-auto max-w-2xl text-center mb-20">
-      <CompromisoContent />
-    </div>
-
-    <div class="mb-16">
-      <span class="text-red-500 font-display font-bold uppercase tracking-[0.3em] text-sm">{t('nav.club')}</span>
-      <h2 class="font-display font-black uppercase tracking-wide text-4xl lg:text-5xl text-slate-800 mt-1 mb-4">{t('club.skin')}</h2>
-      <div class="w-12 h-1 bg-red-500 mx-auto"></div>
-    </div>
-    <div class="club-prose mx-auto max-w-2xl text-center mb-12">
-      <ColoresContent />
-    </div>
-
-    <EquipacionImages />
-  </div>
-</section>
-
-<SponsorsCarousel />
-

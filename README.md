@@ -61,13 +61,13 @@ src/content/
 
 ## Dónde poner las imágenes
 
-Las imágenes se colocan dentro de `public/fotos/content/`, en la subcarpeta de su sección:
+Las imágenes se colocan dentro de `src/assets/fotos/content/`, en la subcarpeta de su sección. Al compilar, Astro las optimiza automáticamente (las convierte a WebP y genera varios tamaños), así que se pueden subir en buena calidad (PNG, JPG o WebP):
 
 ```
-public/fotos/content/
+src/assets/fotos/content/
   1_club/          ← Fotos del club y equipaciones
   2_colaboradores/
-    sponsors/      ← Logos SVG de los patrocinadores
+    sponsors/      ← Logos de los patrocinadores (PNG, o SVG si es vectorial)
   3_entrenamientos/
   4_rutas/         ← Mapas e imágenes de las rutas
   5_noticias/      ← Fotos de las noticias
@@ -75,11 +75,15 @@ public/fotos/content/
   7_contacto/
 ```
 
-En el fichero `.md`, la ruta siempre empieza por `/fotos/content/`. Por ejemplo, una imagen guardada en `public/fotos/content/5_noticias/foto.jpg` se referencia como:
+En el fichero `.md`, la ruta siempre empieza por `/fotos/content/` (sin `src/assets`). Por ejemplo, una imagen guardada en `src/assets/fotos/content/5_noticias/foto.jpg` se referencia como:
 
 ```
 image: "/fotos/content/5_noticias/foto.jpg"
 ```
+
+Si la imagen no existe, la compilación falla indicando la ruta que falta.
+
+> No guardes logos como SVG que solo contienen una imagen PNG incrustada: pesan mucho y no se pueden optimizar. Usa el PNG directamente.
 
 ---
 
@@ -102,7 +106,7 @@ Aquí el texto completo de la noticia, en formato libre.
 - `title` — Título que se muestra en la tarjeta.
 - `date` — Fecha en formato `AAAA-MM-DD`.
 - `summary` — Frase corta que aparece bajo el título en la lista de noticias.
-- `image` — Ruta a una imagen (opcional). Las imágenes van en `public/fotos/content/5_noticias/`.
+- `image` — Ruta a una imagen (opcional). Las imágenes van en `src/assets/fotos/content/5_noticias/`.
 
 ---
 
@@ -159,7 +163,7 @@ Descripción opcional de la ruta.
 - `desnivel_positivo` / `desnivel_negativo` — Metros (solo el número, sin "m").
 - `altitud_maxima` / `altitud_minima` — Metros sobre el nivel del mar.
 - `trailrank` — Puntuación de Wikiloc entre 0 y 100 (opcional).
-- `imagen` — Imagen del mapa o la ruta (opcional). Las imágenes van en `public/fotos/content/4_rutas/`.
+- `imagen` — Imagen del mapa o la ruta (opcional). Las imágenes van en `src/assets/fotos/content/4_rutas/`.
 - `wikiloc_url` — Enlace a la ruta en Wikiloc (opcional).
 
 ---
@@ -186,7 +190,7 @@ La lista de sponsors y el texto de agradecimiento están en:
 src/content/es/2_colaboradores/index.md
 ```
 
-El frontmatter contiene la lista `sponsors` (nombre y ruta al logo SVG). Los logos van en `public/fotos/content/2_colaboradores/sponsors/`. El cuerpo del fichero es el texto de agradecimiento en formato Markdown.
+El frontmatter contiene la lista `sponsors` (nombre y ruta al logo). Los logos van en `src/assets/fotos/content/2_colaboradores/sponsors/`. El cuerpo del fichero es el texto de agradecimiento en formato Markdown.
 
 ---
 

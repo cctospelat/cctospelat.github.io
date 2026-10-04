@@ -1,62 +1,48 @@
 ---
+import { Font } from 'astro:assets';
 import '../styles/global.css';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+import { languages } from '../i18n/ui';
+import { getHomeUrl, getLangFromUrl, useTranslations } from '../i18n/utils';
 
 interface Props {
 	title: string;
 	description?: string;
 }
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const { title, description = t('layout.description') } = Astro.props;
+
+const homeUrls = Object.fromEntries(Object.keys(languages).map((l) => [l, getHomeUrl(l as keyof typeof languages)]));
 ---
 
 <!doctype html>
 <html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
-		<script is:inline>
-			(function () {
-				try {
-					var STORAGE_KEY = 'cct-lang-pref';
-					var langMap = { es: '/', ca: '/ca/', en: '/en/', fr: '/fr/' };
-					var pathname = window.location.pathname;
-					var pathLang = pathname === '/' ? 'es' : pathname.split('/')[1];
+		<script is:inline define:vars={{ homeUrls }}>
+			// On the first visit to `/`, redirect to the browser's language and remember it.
+			// Visiting a language URL directly (e.g. a shared /fr/ link) counts as an explicit choice.
+			try {
+				var STORAGE_KEY = 'cct-lang-pref';
+				var pathname = location.pathname;
+				var pathLang = pathname === '/' ? 'es' : pathname.split('/')[1];
 
-					if (!(pathLang in langMap)) return;
-					if (localStorage.getItem(STORAGE_KEY)) return;
-
-					// Visiting a language URL directly (e.g. a shared /fr/ link) is an
-					// explicit choice: remember it, don't override with the browser language.
-					if (pathname !== '/') {
-						localStorage.setItem(STORAGE_KEY, pathLang);
-						return;
-					}
-
-					var navLangs = navigator.languages && navigator.languages.length
-						? navigator.languages
-						: [navigator.language || 'en'];
-
-					function detect() {
+				if (pathLang in homeUrls && !localStorage.getItem(STORAGE_KEY)) {
+					var detected = pathLang;
+					if (pathname === '/') {
+						var prefixes = { es: 'es', ca: 'ca', va: 'ca', fr: 'fr', en: 'en' };
+						var navLangs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+						detected = 'en';
 						for (var i = 0; i < navLangs.length; i++) {
-							var l = (navLangs[i] || '').toLowerCase();
-							if (l.indexOf('es') === 0) return 'es';
-							if (l.indexOf('ca') === 0 || l.indexOf('va') === 0) return 'ca';
-							if (l.indexOf('fr') === 0) return 'fr';
-							if (l.indexOf('en') === 0) return 'en';
+							var match = prefixes[(navLangs[i] || '').slice(0, 2).toLowerCase()];
+							if (match) { detected = match; break; }
 						}
-						return 'en';
 					}
-
-					var detected = detect();
 					localStorage.setItem(STORAGE_KEY, detected);
-					if (detected !== 'es') {
-						window.location.replace(langMap[detected] + window.location.search + window.location.hash);
-					}
-				} catch (e) {}
-			})();
+					if (detected !== pathLang) location.replace(homeUrls[detected] + location.search + location.hash);
+				}
+			} catch (e) {}
 		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -66,9 +52,10 @@ const { title, description = t('layout.description') } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title} | C.C. Tospelat</title>
 		<meta name="description" content={description} />
+		<Font cssVariable="--font-inter" preload={[{ weight: 400 }]} />
+		<Font cssVariable="--font-barlow" preload={[{ weight: 900 }]} />
 	</head>
 	<body class="flex flex-col min-h-screen bg-slate-50">
 		<slot />
 	</body>
 </html>
-

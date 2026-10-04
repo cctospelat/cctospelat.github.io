@@ -1,0 +1,38 @@
+---
+// Opens a full-size view of any `[data-lightbox-src]` button's image.
+---
+
+<dialog
+  id="lightbox"
+  class="m-auto max-w-none max-h-none w-full h-full bg-transparent p-4 backdrop:bg-black/80 backdrop:backdrop-blur-sm open:flex items-center justify-center"
+  aria-label="Imagen ampliada"
+>
+  <form method="dialog">
+    <button class="absolute top-4 right-4 text-white/80 hover:text-white transition-colors" aria-label="Cerrar">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </form>
+  <img alt="" class="w-full max-w-5xl max-h-[90vh] rounded-xl shadow-2xl object-contain" />
+</dialog>
+
+<script>
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement;
+  const image = dialog.querySelector('img')!;
+  const page = document.documentElement;
+
+  document.addEventListener('click', (e) => {
+    const trigger = (e.target as Element).closest<HTMLElement>('[data-lightbox-src]');
+    if (!trigger) return;
+    image.src = trigger.dataset.lightboxSrc!;
+    image.alt = trigger.querySelector('img')?.alt ?? '';
+    dialog.showModal();
+    page.classList.add('overflow-hidden');
+  });
+
+  // Close when clicking the backdrop (anywhere outside the image)
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+
+  dialog.addEventListener('close', () => page.classList.remove('overflow-hidden'));
+</script>

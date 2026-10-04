@@ -1,0 +1,19 @@
+---
+interface Props {
+  label: string;
+  title: string;
+  align?: 'center' | 'left';
+  dark?: boolean;
+  class?: string;
+}
+
+const { label, title, align = 'center', dark = false, class: className } = Astro.props;
+const centered = align === 'center';
+---
+
+<div class:list={[centered && 'text-center', className]}>
+  <span class:list={['font-display font-bold uppercase tracking-[0.3em] text-sm', dark ? 'text-red-400' : 'text-red-500']}>{label}</span>
+  <h2 class:list={['font-display font-black uppercase tracking-wide text-4xl lg:text-5xl mt-1 mb-4', dark ? 'text-white' : 'text-slate-800']}>{title}</h2>
+  <div class:list={['w-12 h-1 bg-red-500', centered && 'mx-auto']}></div>
+  <slot />
+</div>

@@ -1,0 +1,75 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import CardImage from './CardImage.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+type Props = CollectionEntry<'fichas'>['data'];
+
+const { nombre, imagen, ejecucion, evitar, consejos } = Astro.props;
+const t = useTranslations(getLangFromUrl(Astro.url));
+---
+
+<article class="bg-slate-800 border border-slate-700 border-t-2 border-t-emerald-500/60 rounded-2xl overflow-hidden flex flex-col hover:border-emerald-500/50 hover:border-t-emerald-500 transition-colors duration-300">
+  <CardImage src={imagen} alt={nombre} sizes="(min-width: 1152px) 552px, (min-width: 768px) 50vw, 100vw">
+    <svg slot="placeholder" xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+    </svg>
+  </CardImage>
+
+  <div class="p-5 flex flex-col flex-grow gap-5">
+    <h4 class="font-display font-black uppercase tracking-wide text-xl text-white leading-tight border-b border-slate-700 pb-4">
+      {nombre}
+    </h4>
+
+    <div>
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-5 h-5 rounded-full bg-emerald-400/20 flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+        <p class="text-emerald-400 text-xs font-bold uppercase tracking-widest">{t('fichas.ejecucion')}</p>
+      </div>
+      <ol class="space-y-2">
+        {ejecucion.map((paso, i) => (
+          <li class="flex items-start gap-3 text-slate-300 text-sm">
+            <span class="shrink-0 w-5 h-5 rounded-full bg-emerald-400/10 border border-emerald-400/30 text-emerald-400 text-xs font-black flex items-center justify-center leading-none">{i + 1}</span>
+            {paso}
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div>
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-5 h-5 rounded-full bg-red-400/20 flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </span>
+        <p class="text-red-400 text-xs font-bold uppercase tracking-widest">{t('fichas.evitar')}</p>
+      </div>
+      <ul class="space-y-2">
+        {evitar.map((item) => (
+          <li class="flex items-start gap-3 text-slate-300 text-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0 mt-1.5"></span>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="mt-auto pt-4 border-t border-slate-700">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-5 h-5 rounded-full bg-amber-400/20 flex items-center justify-center shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </span>
+        <p class="text-amber-400 text-xs font-bold uppercase tracking-widest">{t('fichas.consejos')}</p>
+      </div>
+      <ul class="space-y-2">
+        {consejos.map((consejo) => (
+          <li class="flex items-start gap-3 text-slate-300 text-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 mt-1.5"></span>
+            {consejo}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</article>

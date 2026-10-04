@@ -1,7 +1,6 @@
 ---
 title: "Notre Peau"
 subtitle: "Valeurs et objectifs qui guident notre club."
-image: "/fotos/content/1_club/commitment.png"
 ---
 
 Tos Pelat continue de rendre hommage à ses couleurs : rouge, blanc et noir. En 1996, ses fondateurs ont décidé qu'elles représenteraient l'identité du club.
