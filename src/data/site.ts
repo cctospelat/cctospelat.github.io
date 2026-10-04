@@ -28,3 +28,13 @@ export const SOCIAL_LINKS = [
     icon: 'M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169',
   },
 ] as const;
+
+export const CLUB = {
+  name: 'C.C. Tospelat',
+  alternateName: ['Tos Pelat', 'Club de Running Tos Pelat', 'C.C. Tospelat Moncada'],
+  email: 'cctospelat@gmail.com',
+  foundingDate: '1996',
+  locality: 'Moncada',
+  region: 'Valencia',
+  country: 'ES',
+} as const;

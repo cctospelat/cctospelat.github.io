@@ -47,3 +47,12 @@ Defined in `src/content.config.ts`. Files live in `src/content/<lang>/<folder>/<
 ### Adding Content
 
 Create the Markdown file in all four language directories (`es/`, `ca/`, `en/`, `fr/`) with the frontmatter required by the schema in `src/content.config.ts`. See README.md for author-facing instructions.
+
+### SEO & AI agents
+
+Generated at build time from the content collections (no manual upkeep):
+
+- `src/pages/llms.txt.ts` → `/llms.txt` (site summary per https://llmstxt.org) and `src/pages/llms-full.txt.ts` → `/llms-full.txt` (all Spanish content as Markdown)
+- `src/pages/robots.txt.ts` and `src/pages/sitemap.xml.ts` (with `hreflang` alternates)
+- `src/components/StructuredData.astro`: schema.org JSON-LD (`SportsOrganization` + one `SportsEvent` per race), injected through the layout's `head` slot. Club facts (email, founding year, location) live in `CLUB` in `src/data/site.ts`
+- `Layout.astro` emits canonical, `hreflang`, Open Graph and a link to `/llms.txt`

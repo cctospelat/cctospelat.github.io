@@ -8,11 +8,13 @@ import EntrenamientoSection from './entrenamiento/EntrenamientoSection.astro';
 import NewsSection from './NewsSection.astro';
 import CalendarSection from './CalendarSection.astro';
 import Footer from './Footer.astro';
+import StructuredData from './StructuredData.astro';
 
 type Props = { description?: string };
 ---
 
 <Layout title="C.C. Tospelat Moncada" description={Astro.props.description}>
+  <StructuredData slot="head" />
   <Header />
   <main>
     <HeroPresentation />

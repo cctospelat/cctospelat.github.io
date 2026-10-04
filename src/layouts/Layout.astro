@@ -1,7 +1,7 @@
 ---
 import { Font } from 'astro:assets';
 import '../styles/global.css';
-import { languages } from '../i18n/ui';
+import { defaultLang, languages, type Lang } from '../i18n/ui';
 import { getHomeUrl, getLangFromUrl, useTranslations } from '../i18n/utils';
 
 interface Props {
@@ -13,7 +13,9 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const { title, description = t('layout.description') } = Astro.props;
 
-const homeUrls = Object.fromEntries(Object.keys(languages).map((l) => [l, getHomeUrl(l as keyof typeof languages)]));
+const langs = Object.keys(languages) as Lang[];
+const homeUrls = Object.fromEntries(langs.map((l) => [l, getHomeUrl(l)]));
+const absolute = (path: string) => new URL(path, Astro.site).href;
 ---
 
 <!doctype html>
@@ -52,6 +54,18 @@ const homeUrls = Object.fromEntries(Object.keys(languages).map((l) => [l, getHom
 		<meta name="generator" content={Astro.generator} />
 		<title>{title} | C.C. Tospelat</title>
 		<meta name="description" content={description} />
+		<link rel="canonical" href={absolute(getHomeUrl(lang))} />
+		{langs.map((l) => <link rel="alternate" hreflang={l} href={absolute(getHomeUrl(l))} />)}
+		<link rel="alternate" hreflang="x-default" href={absolute(getHomeUrl(defaultLang))} />
+		<link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt" />
+		<link rel="sitemap" href="/sitemap.xml" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="C.C. Tospelat" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={absolute(getHomeUrl(lang))} />
+		<meta property="og:locale" content={languages[lang].locale.replace('-', '_')} />
+		<slot name="head" />
 		<Font cssVariable="--font-inter" preload={[{ weight: 400 }]} />
 		<Font cssVariable="--font-barlow" preload={[{ weight: 900 }]} />
 	</head>
