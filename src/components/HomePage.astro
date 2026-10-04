@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from './Header.astro';
+import HeroPresentation from './HeroPresentation.astro';
+import ClubSection from './ClubSection.astro';
+import SponsorsCarousel from './SponsorsCarousel.astro';
+import EntrenamientoSection from './entrenamiento/EntrenamientoSection.astro';
+import NewsSection from './NewsSection.astro';
+import CalendarSection from './CalendarSection.astro';
+import Footer from './Footer.astro';
+import StructuredData from './StructuredData.astro';
+
+type Props = { description?: string };
+---
+
+<Layout title="C.C. Tospelat Moncada" description={Astro.props.description}>
+  <StructuredData slot="head" />
+  <Header />
+  <main>
+    <HeroPresentation />
+    <ClubSection />
+    <SponsorsCarousel />
+    <EntrenamientoSection />
+    <NewsSection />
+    <CalendarSection />
+  </main>
+  <Footer />
+</Layout>

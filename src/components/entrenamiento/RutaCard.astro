@@ -1,0 +1,100 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import CardImage from './CardImage.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+type Props = CollectionEntry<'rutas'>['data'];
+
+const ruta = Astro.props;
+const t = useTranslations(getLangFromUrl(Astro.url));
+
+function difficultyStyle(dificultad: string) {
+  const d = dificultad.toLowerCase();
+  if (['baj', 'fàcil', 'easy', 'facile'].some((s) => d.includes(s))) return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30';
+  if (['med', 'mit', 'moy'].some((s) => d.includes(s))) return 'text-amber-400 bg-amber-400/10 border-amber-400/30';
+  if (['alt', 'hig', 'hau'].some((s) => d.includes(s))) return 'text-orange-400 bg-orange-400/10 border-orange-400/30';
+  return 'text-red-400 bg-red-400/10 border-red-400/30';
+}
+
+const stats = [
+  { label: t('rutas.distancia'), value: ruta.distancia, color: 'text-white' },
+  { label: t('rutas.tipo'), value: ruta.tipo_ruta, color: 'text-white' },
+  { label: t('rutas.desnivel_pos'), value: `+${ruta.desnivel_positivo} m`, color: 'text-emerald-400' },
+  { label: t('rutas.desnivel_neg'), value: `-${ruta.desnivel_negativo} m`, color: 'text-red-400' },
+  { label: t('rutas.altitud_max'), value: `${ruta.altitud_maxima} m`, color: 'text-white' },
+  { label: t('rutas.altitud_min'), value: `${ruta.altitud_minima} m`, color: 'text-white' },
+];
+---
+
+<article class="bg-slate-950 border border-slate-700/60 border-t-2 border-t-red-500/60 rounded-2xl overflow-hidden flex flex-col hover:border-red-500/50 hover:border-t-red-500 transition-colors duration-300">
+  <CardImage src={ruta.imagen} alt={ruta.nombre} sizes="(min-width: 1280px) 368px, (min-width: 768px) 50vw, 100vw">
+    <svg slot="placeholder" xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 17l4-8 4 4 3-6 4 10"/><circle cx="18" cy="5" r="2"/>
+    </svg>
+  </CardImage>
+
+  <div class="p-5 flex flex-col flex-grow">
+    <div class="flex items-start justify-between gap-3 mb-4">
+      <h4 class="font-display font-black uppercase tracking-wide text-lg text-white leading-tight">{ruta.nombre}</h4>
+      <span class={`shrink-0 text-xs font-bold uppercase tracking-wide px-2 py-1 rounded-lg border ${difficultyStyle(ruta.dificultad)}`}>
+        {ruta.dificultad}
+      </span>
+    </div>
+
+    <dl class="grid grid-cols-2 gap-x-4 gap-y-3 mb-4">
+      {stats.map(({ label, value, color }) => (
+        <div>
+          <dt class="text-slate-500 text-xs uppercase tracking-wider mb-0.5">{label}</dt>
+          <dd class={`${color} font-bold text-sm`}>{value}</dd>
+        </div>
+      ))}
+    </dl>
+
+    {ruta.trailrank !== undefined && (
+      <div class="flex items-center gap-3 mb-4 p-3 bg-slate-800/80 rounded-xl">
+        <div class="relative w-10 h-10 shrink-0">
+          <svg viewBox="0 0 36 36" class="w-10 h-10 -rotate-90" aria-hidden="true">
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="#334155" stroke-width="3"/>
+            <circle
+              cx="18" cy="18" r="15.9" fill="none"
+              stroke="#ef4444" stroke-width="3"
+              stroke-dasharray={`${ruta.trailrank} ${100 - ruta.trailrank}`}
+              stroke-linecap="round"
+            />
+          </svg>
+          <span class="absolute inset-0 flex items-center justify-center text-white text-xs font-black">{ruta.trailrank}</span>
+        </div>
+        <div>
+          <p class="text-slate-400 text-xs uppercase tracking-wider">{t('rutas.trailrank')}</p>
+          <p class="text-white text-xs font-medium">wikiloc.com</p>
+        </div>
+      </div>
+    )}
+
+    {ruta.puntos_interes && ruta.puntos_interes.length > 0 && (
+      <div class="mt-auto pt-4 border-t border-slate-700">
+        <p class="text-slate-500 text-xs uppercase tracking-wider mb-2">{t('rutas.poi')}</p>
+        <ul class="space-y-1">
+          {ruta.puntos_interes.map((poi) => (
+            <li class="flex items-center gap-2 text-slate-300 text-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+              {poi}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {ruta.wikiloc_url && (
+      <a
+        href={ruta.wikiloc_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm font-bold uppercase tracking-wide hover:bg-red-500/20 transition-colors"
+      >
+        {t('rutas.ver_wikiloc')}
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    )}
+  </div>
+</article>

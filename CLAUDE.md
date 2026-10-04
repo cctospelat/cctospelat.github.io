@@ -17,29 +17,42 @@ This is an **Astro 7** static site for the C.C. Tospelat running club, using **T
 
 ### Routing & i18n
 
-- `src/pages/index.astro` — default Spanish (`es`) page (no URL prefix)
-- `src/pages/[lang]/index.astro` — localized pages for `ca`, `en`, `fr`
-- Language detection: `src/i18n/utils.ts` exports `getLangFromUrl` and `useTranslations`
-- All UI strings live in `src/i18n/ui.ts`; `es` is `defaultLang` and acts as the fallback
+- `src/pages/index.astro` (`es`, no prefix) and `src/pages/[lang]/index.astro` (`ca`, `en`, `fr`) both render `src/components/HomePage.astro`
+- `src/i18n/ui.ts` holds `languages` (name + Intl locale), the `Lang` type and all UI strings; `es` is `defaultLang` and the fallback
+- `src/i18n/utils.ts`: `getLangFromUrl`, `useTranslations`, `getHomeUrl`, `isLang` (collection filter by `<lang>/` id prefix) and `formatDate`
+- `src/layouts/Layout.astro` has an inline script that redirects first visits to `/` to the browser language
+- Shared constants (section anchors used by the navs, social links, join form URL) live in `src/data/site.ts`
 
 ### Content Collections
 
-Defined in `src/content.config.ts`. All collections are loaded via `glob()` and follow the structure `src/content/<collection>/<lang>/<slug>.md`.
+Defined in `src/content.config.ts`. Files live in `src/content/<lang>/<folder>/<slug>.md`; entry ids keep the `<lang>/` prefix (an `index.md` gets id `<lang>/<folder>`).
 
-| Collection | Content |
-|---|---|
-| `presentation` | About, commitment, colors sections (`sobre-nosotros`, `compromiso`, `colores`) |
-| `entrenamiento` | Training schedule/info |
-| `news` | News posts (`title`, `date`, `summary`, `image?`) |
-| `calendar` | Upcoming races (`title`, `date`, `location`, `distance`, `url?`) |
-| `contact` | Contact info including social links |
+| Collection | Folder | Content |
+|---|---|---|
+| `club` | `1_club` | `sobre-nosotros` (also feeds the hero), `compromiso`, `nuestra-piel` |
+| `colaboradores` | `2_colaboradores` | Sponsor list + thank-you text (`index.md`) |
+| `entrenamiento` | `3_entrenamientos` | Intro text (currently not rendered) |
+| `fichas` | `3_entrenamientos/fichas` | Exercise cards |
+| `rutas` | `4_rutas` | Running routes |
+| `noticias` | `5_noticias` | News posts (`title`, `date`, `summary`, `image?`) |
+| `calendario` | `6_eventos` | Upcoming races (`title`, `date`, `location`, `distance`, `url?`) |
 
-Components filter collection entries by language using the `id` prefix (e.g., `entry.id.split('/')[0] === lang`).
+### Images
 
-### Static Assets
-
-Public assets in `public/` are served at the root path (e.g., `/favicon.ico`, `/logos/logo1.svg`, `/fotos/content/...`). The site is deployed to `https://cctospelat.github.io` with no base path.
+- Content photos live in `src/assets/fotos/content/...` and are referenced from frontmatter as `/fotos/content/...` (no `src/assets` prefix). `src/utils/images.ts#resolveImage` maps that path to the imported asset (build fails if missing); render them with `src/components/ui/ContentImage.astro` so Astro outputs optimized WebP with `srcset`.
+- Fixed images (logos, kit photos) are imported directly and rendered with `astro:assets` `<Image>`.
+- `public/` only holds files served verbatim at the root path: favicons and language flags (`/logos/flags/<lang>.svg`). The site is deployed to `https://cctospelat.github.io` with no base path.
+- Fonts (Inter, Barlow Condensed) are self-hosted via Astro's Fonts API (`fonts` in `astro.config.mjs`, `<Font>` in the layout).
 
 ### Adding Content
 
-To add a news post or calendar entry, create a Markdown file in all four language directories (`es/`, `ca/`, `en/`, `fr/`) with the required frontmatter fields matching the collection schema in `src/content.config.ts`.
+Create the Markdown file in all four language directories (`es/`, `ca/`, `en/`, `fr/`) with the frontmatter required by the schema in `src/content.config.ts`. See README.md for author-facing instructions.
+
+### SEO & AI agents
+
+Generated at build time from the content collections (no manual upkeep):
+
+- `src/pages/llms.txt.ts` → `/llms.txt` (site summary per https://llmstxt.org) and `src/pages/llms-full.txt.ts` → `/llms-full.txt` (all Spanish content as Markdown)
+- `src/pages/robots.txt.ts` and `src/pages/sitemap.xml.ts` (with `hreflang` alternates)
+- `src/components/StructuredData.astro`: schema.org JSON-LD (`SportsOrganization` + one `SportsEvent` per race), injected through the layout's `head` slot. Club facts (email, founding year, location) live in `CLUB` in `src/data/site.ts`
+- `Layout.astro` emits canonical, `hreflang`, Open Graph and a link to `/llms.txt`

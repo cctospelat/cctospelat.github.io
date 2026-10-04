@@ -1,20 +1,22 @@
 ---
-import { getLangFromUrl } from '../../i18n/utils';
+import { languages, type Lang } from '../../i18n/ui';
+import { getHomeUrl, getLangFromUrl } from '../../i18n/utils';
 
-const lang = getLangFromUrl(Astro.url);
+const currentLang = getLangFromUrl(Astro.url);
 ---
 
 <div class="flex space-x-3 items-center border-l border-slate-800 pl-8">
-  <a href="/" class={`group relative w-6 h-4 overflow-hidden rounded-sm border border-slate-800 hover:border-slate-600 transition-all ${lang === 'es' ? 'border-red-500 ring-1 ring-red-500' : ''}`} title="Español">
-    <img src="/logos/flags/es.svg" alt="Español" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all" />
-  </a>
-  <a href="/ca/" class={`group relative w-6 h-4 overflow-hidden rounded-sm border border-slate-800 hover:border-slate-600 transition-all ${lang === 'ca' ? 'border-red-500 ring-1 ring-red-500' : ''}`} title="Valencià">
-    <img src="/logos/flags/ca.svg" alt="Valencià" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all" />
-  </a>
-  <a href="/en/" class={`group relative w-6 h-4 overflow-hidden rounded-sm border border-slate-800 hover:border-slate-600 transition-all ${lang === 'en' ? 'border-red-500 ring-1 ring-red-500' : ''}`} title="English">
-    <img src="/logos/flags/en.svg" alt="English" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all" />
-  </a>
-  <a href="/fr/" class={`group relative w-6 h-4 overflow-hidden rounded-sm border border-slate-800 hover:border-slate-600 transition-all ${lang === 'fr' ? 'border-red-500 ring-1 ring-red-500' : ''}`} title="Français">
-    <img src="/logos/flags/fr.svg" alt="Français" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all" />
-  </a>
+  {(Object.entries(languages) as [Lang, (typeof languages)[Lang]][]).map(([lang, { name }]) => (
+    <a
+      href={getHomeUrl(lang)}
+      title={name}
+      lang={lang}
+      class:list={[
+        'group relative w-6 h-4 overflow-hidden rounded-sm border transition-all',
+        lang === currentLang ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-800 hover:border-slate-600',
+      ]}
+    >
+      <img src={`/logos/flags/${lang}.svg`} alt={name} width="24" height="16" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all" />
+    </a>
+  ))}
 </div>

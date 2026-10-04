@@ -1,25 +1,11 @@
 ---
+import { SOCIAL_LINKS } from '../../data/site';
 ---
 
 <div class="flex space-x-5 items-center">
-  <a href="https://www.instagram.com/cctospelat/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
-    <img src="/logos/instagram.svg" class="w-4 h-4" alt="Instagram" />
-  </a>
-  <a href="https://www.facebook.com/tospelat.moncada/?locale=ES" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
-    <img src="/logos/facebook.svg" class="w-4 h-4" alt="Facebook" />
-  </a>
-  <a href="https://www.strava.com/clubs/2043578/recent_activity" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Strava">
-    <img src="/logos/strava.svg" class="w-4 h-4" alt="Strava" />
-  </a>
+  {SOCIAL_LINKS.map(({ name, url, icon }) => (
+    <a href={url} target="_blank" rel="noopener noreferrer" aria-label={name} class="text-white hover:text-red-500 transition-colors duration-200">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d={icon} /></svg>
+    </a>
+  ))}
 </div>
-
-<style>
-  .social-icon img {
-    filter: brightness(0) invert(1);
-    transition: filter 0.2s ease;
-  }
-  .social-icon:hover img {
-    /* converts black to red-500 (#ef4444) */
-    filter: brightness(0) saturate(100%) invert(34%) sepia(78%) saturate(2000%) hue-rotate(336deg) brightness(105%);
-  }
-</style>

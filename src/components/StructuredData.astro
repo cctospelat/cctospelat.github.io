@@ -1,0 +1,45 @@
+---
+import logo from '../assets/logos/logo1.png';
+import { CLUB, SOCIAL_LINKS } from '../data/site';
+import { getHomeUrl, getLangFromUrl } from '../i18n/utils';
+import { getSiteContent } from '../utils/site-content';
+
+// schema.org data describing the club and its upcoming races, for search engines and AI agents.
+const lang = getLangFromUrl(Astro.url);
+const { club, calendario } = await getSiteContent(lang);
+const homeUrl = new URL(getHomeUrl(lang), Astro.site).href;
+
+const organization = {
+  '@type': 'SportsOrganization',
+  '@id': new URL('/#club', Astro.site).href,
+  name: CLUB.name,
+  alternateName: CLUB.alternateName,
+  url: homeUrl,
+  logo: new URL(logo.src, Astro.site).href,
+  description: club[0]?.data.subtitle,
+  sport: 'Running',
+  foundingDate: CLUB.foundingDate,
+  email: CLUB.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: CLUB.locality,
+    addressRegion: CLUB.region,
+    addressCountry: CLUB.country,
+  },
+  sameAs: SOCIAL_LINKS.map(({ url }) => url),
+};
+
+const events = calendario.map(({ data }) => ({
+  '@type': 'SportsEvent',
+  name: data.title,
+  startDate: data.date.toISOString(),
+  sport: 'Running',
+  location: { '@type': 'Place', name: data.location },
+  ...(data.url && { url: data.url }),
+  organizer: { '@id': organization['@id'] },
+}));
+
+const jsonLd = { '@context': 'https://schema.org', '@graph': [organization, ...events] };
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
